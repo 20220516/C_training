@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct NODE {
+
+	struct NODE* next;
+	int data;
+
+}NODE;
+
+void add_first(NODE* target, int data) {
+
+	if (target == NULL) {
+
+		return;
+	}
+
+
+	NODE* new_node = malloc(sizeof(NODE));
+
+	if (new_node == NULL) {
+
+		return;
+	}
+
+
+	new_node->next = target->next;
+	new_node->data = data;
+
+	target->next = new_node;
+
+}
+
+
+
+NODE* find_node(NODE* node, int data) {
+
+	if (node == NULL) {
+
+		return NULL;
+	}
+
+	NODE* temp = node->next;
+
+	while (temp != NULL) {
+
+		if (temp->data == data) {
+
+			return temp;
+		}
+		else {
+
+			temp = temp->next;
+
+		}
+
+	}
+
+	return NULL;
+}
+
+
+int main() {
+
+	NODE* head = malloc(sizeof(NODE));
+	head->next = NULL;
+
+	add_first(head, 10);
+	add_first(head, 20);
+	add_first(head, 30);
+
+
+
+	NODE* curr = head->next;
+
+	/*
+	while (curr != NULL) {
+
+		printf("%d\n", curr->data);
+		curr = curr->next;
+	}
+	*/
+
+
+
+	NODE* found = find_node(head, 20);
+
+	printf("%d\n", found->data);
+
+
+	curr = head->next;
+
+	while (curr != NULL) {
+
+		NODE* mem = curr->next;
+
+		free(curr);
+
+		curr = mem;
+	}
+
+
+	free(head);
+	
+	return 0;
+}
